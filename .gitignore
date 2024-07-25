@@ -4,3 +4,5 @@
 .ruff_cache
 dist
 src/emb_predict/__pycache__
+data
+models
