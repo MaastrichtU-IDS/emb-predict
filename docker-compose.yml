@@ -1,0 +1,17 @@
+version: "3"
+services:
+
+  # Container used for training and testing
+  trapi:
+    build: .
+    volumes:
+      - ./:/app
+      - ~/.nanopub-docker:/root/.nanopub
+    environment:
+      PYTHONUNBUFFERED: '1'
+      DEV_MODE: 'true'
+      LOG_LEVEL: 'INFO'
+    ports:
+      - 8808:8808
+  # If you want to run training:
+  # entrypoint: python /app/src/emb_predict/train.py

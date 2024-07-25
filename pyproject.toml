@@ -1,0 +1,166 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+requires-python = ">=3.8"
+version = "0.1.0"
+name = "emb-predict"
+description = "Machine learning models to produce predictions that can be integrated to Translator Reasoner APIs."
+readme = "README.md"
+license = { file = "LICENSE.txt" }
+authors = [
+    { name = "Michel Dumontier", email = "michel.dumontier@maastrichtuniversity.nl" },
+]
+keywords = [
+    "Python",
+]
+dependencies = [
+    "typer",
+    "dvc",
+    "trapi-predict-kit >=0.1.0",
+    # "trapi-predict-kit @ git+https://github.com/MaastrichtU-IDS/trapi-predict-kit.git@main",
+    # "trapi-predict-kit @ {root:uri}/../trapi-predict-kit",
+]
+
+[project.optional-dependencies]
+train = [
+    "scikit-learn",
+    "pandas",
+    # "numpy",
+]
+test = [
+    "pytest >=7.1.3",
+    "pytest-cov >=3.0.0",
+    "mypy >=0.991",
+    "pre-commit",
+    "uvicorn",
+]
+deploy = [
+    "uvicorn",
+]
+
+
+[project.urls]
+Homepage = "https://github.com/micheldumontier/emb-predict"
+Documentation = "https://github.com/micheldumontier/emb-predict"
+History = "https://github.com/micheldumontier/emb-predict/releases"
+Tracker = "https://github.com/micheldumontier/emb-predict/issues"
+Source = "https://github.com/micheldumontier/emb-predict"
+
+
+
+# ENVIRONMENTS AND SCRIPTS
+[tool.hatch.envs.default]
+features = [
+    "train",
+    "test",
+    "deploy",
+]
+post-install-commands = [
+    "pre-commit install",
+    # "dvc pull",
+]
+
+[tool.hatch.envs.default.scripts]
+dev = "uvicorn emb_predict.api:app --host 0.0.0.0 --port 8808 --log-level=debug --reload"
+train = "python src/emb_predict/train.py {args}"
+predict = "python src/emb_predict/predict.py {args}"
+test = [
+    "fmt",
+    "pytest {args}",
+    # "mypy",
+]
+fmt = [
+    "pre-commit run --all --all-files",
+]
+push-data = [
+    "dvc add data",
+    "dvc push",
+]
+
+
+# TOOLS
+[tool.hatch.build]
+sources = ["src"]
+
+[tool.hatch.version]
+path = "src/emb_predict/__init__.py"
+
+# If you need to import packages from git URLs
+[tool.hatch.metadata]
+allow-direct-references = true
+
+
+[tool.pytest.ini_options]
+addopts = [
+    "-vvv",
+    "--cov=src",
+    "--color=yes",
+    "--cov-report=term-missing",
+    # "--cov-fail-under=85",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning:httpx.*:"
+]
+
+# https://github.com/charliermarsh/ruff#supported-rules
+[tool.ruff]
+target-version = "py38"
+line-length = 120
+select = [
+    "A",
+    "B",   # flake8-bugbear
+    "C",   # flake8-comprehensions
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    # "FBT", # flake8-boolean-trap
+    # "I",   # isort
+    "ICN",
+    "N",
+    "PLC",
+    "PLE",
+    "PLR",
+    "PLW",
+    "Q",
+    "RUF",
+    "S",
+    "SIM",
+    "T",
+    "TID",
+    "UP",
+    "W",  # pycodestyle warnings
+    "YTT",
+]
+
+ignore = [
+    "Q000", # single quotes found but double quotes preferred
+    "E501", # line too long
+    "B008", # do not perform function calls in argument defaults
+    "B006", # do not use mutable data structures for argument defaults
+    "C901", # too complex
+    "S101", # Use of `assert` detected
+    "T201", "T203", # remove print and pprint
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.isort]
+known-third-party = ["trapi_predict_kit"]
+
+
+[tool.mypy]
+files = ["src/"]
+strict = false
+implicit_reexport = true
+follow_imports = "normal"
+ignore_missing_imports = true
+pretty = true
+show_column_numbers = true
+warn_no_return = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+# disallow_untyped_calls = false
+# disallow_untyped_defs = false
+# disallow_any_generics = false

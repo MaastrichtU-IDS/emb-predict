@@ -1,0 +1,13 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Embedding predictor
+message: 'If you use this software, please cite it as below.'
+type: software
+authors:
+  - orcid: 'https://orcid.org/0000-0000-0000-0000'
+    email: michel.dumontier@maastrichtuniversity.nl
+    given-names: Michel Dumontier
+repository-code: 'https://github.com/micheldumontier/emb-predict'
+date-released: '2024-07-25'
