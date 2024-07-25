@@ -24,9 +24,23 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+prepare = [
+    "pandas",
+    "torch",
+    "requests",
+    "numpy",
+    "tqdm",
+    "scikit-learn",
+    "MolecularTransformerEmbeddings @ git+https://github.com/vemonet/MolecularTransformerEmbeddings.git",
+    "PubChemPy",
+    "bio",
+]
 train = [
     "scikit-learn",
     "pandas",
+    "torch",
+    "qdrant-client",
+    "xgboost",
     # "numpy",
 ]
 test = [
@@ -53,6 +67,7 @@ Source = "https://github.com/micheldumontier/emb-predict"
 # ENVIRONMENTS AND SCRIPTS
 [tool.hatch.envs.default]
 features = [
+    "prepare",
     "train",
     "test",
     "deploy",
@@ -63,9 +78,11 @@ post-install-commands = [
 ]
 
 [tool.hatch.envs.default.scripts]
-dev = "uvicorn emb_predict.api:app --host 0.0.0.0 --port 8808 --log-level=debug --reload"
+deploy = "uvicorn emb_predict.api:app --host 0.0.0.0 --port 8808 --log-level=debug --reload"
+prepare = "python src/emb_predict/prepare.py {args}"
 train = "python src/emb_predict/train.py {args}"
 predict = "python src/emb_predict/predict.py {args}"
+
 test = [
     "fmt",
     "pytest {args}",

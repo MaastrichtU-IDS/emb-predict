@@ -12,7 +12,7 @@ RUN apt-get update && \
 
 COPY . .
 
-RUN pip install -e ".[train,test,dev]"
+RUN pip install -e ".[train,test,deploy]"
 
 RUN dvc pull -f
 
