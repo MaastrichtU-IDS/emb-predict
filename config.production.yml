@@ -1,0 +1,9 @@
+dataset: ot
+dataset-version: 24.06
+vectordb-url: https://qdrant.137.120.31.148.nip.io
+vectordb-api-key:
+drug-embedding-model: mt
+drug-embedding-dim: 512
+disease-embedding-model: bge
+disease-embedding-dim: 384
+#model-file: data/models/embpredict/ot_xgb_mt_512_bge_384.ubj

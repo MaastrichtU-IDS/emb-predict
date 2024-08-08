@@ -10,7 +10,7 @@ from xgboost import XGBClassifier
 from emb_predict.utils import log
 from emb_predict.vectordb.vectordb import init_vectordb
 from emb_predict.embeddings.embeddings import (
-    getEmbeddingsFilename,
+    get_embeddings_filename,
     load_embeddings,
     load_csv2pd,
 )
@@ -150,14 +150,14 @@ def set_project_paths(
         else config["disease_embedding_dim"]
     )
     drug_embedding_fp = (
-        getEmbeddingsFilename(
+        get_embeddings_filename(
             processed_dir, dataset, "drug", drug_embedding_model, drug_embedding_dim
         )
         if "drug_embedding_fp" not in config
         else config["drug_embedding_fp"]
     )
     disease_embedding_fp = (
-        getEmbeddingsFilename(
+        get_embeddings_filename(
             processed_dir,
             dataset,
             "disease",

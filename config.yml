@@ -1,0 +1,8 @@
+dataset: ot
+dataset-version: 24.06
+vectordb-url: http://localhost:6333
+vectordb-api-key:
+drug-embedding-model: mt
+drug-embedding-dim: 512
+disease-embedding-model: bge
+disease-embedding-dim: 384
