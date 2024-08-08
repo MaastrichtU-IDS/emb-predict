@@ -3,6 +3,7 @@
 .hatch
 .ruff_cache
 .vscode
+.coverage
 dist
 data
 **/__pycache__/
