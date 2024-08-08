@@ -4,6 +4,8 @@
 .ruff_cache
 .vscode
 .coverage
+**/__pycache__/
 dist
 data
-**/__pycache__/
+config.production.yml
+config.yml
