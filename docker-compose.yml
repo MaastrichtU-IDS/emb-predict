@@ -1,16 +1,31 @@
-version: "3"
 services:
-
-  # Container used for training and testing
-  trapi:
+  api:
     build: .
+    container_name: embpredict
+    image: embpredict-gpu
+    restart: unless-stopped
     volumes:
       - ./:/app
     environment:
       PYTHONUNBUFFERED: '1'
       DEV_MODE: 'true'
       LOG_LEVEL: 'INFO'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    shm_size: '4g'
+
     ports:
-      - 8808:8808
-  # If you want to run training:
-  # entrypoint: python /app/src/emb_predict/train.py
+      - 80:8808
+    command: uvicorn --host 0.0.0.0 --port 8808 src.emb_predict.api:app
+    networks:
+      - nginx
+
+networks:
+  nginx:
+    name: nginx
+    external: false
