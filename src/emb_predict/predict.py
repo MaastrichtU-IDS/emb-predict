@@ -15,7 +15,9 @@ from trapi_predict_kit import PredictInput, PredictOutput, PredictOptions, trapi
 
 from emb_predict.utils import log
 from emb_predict.embeddings.mt_embed import get_smiles_embeddings
-from emb_predict.embeddings.llm_embed import get_ollama_embedding
+from emb_predict.embeddings.llm_embed import (
+    compute_disease_embeddings,
+)
 from emb_predict.train import normalize_dfs
 from emb_predict.application import (
     set_project_paths,
@@ -50,7 +52,7 @@ def get_drug_data(
             collection_name=main_drug_collection,
             search_input=subject,
             search_fields=["id", "name", "smiles"],
-            exactMatch=True,
+            exact_match=True,
             limit=1,
         )
 
@@ -63,7 +65,7 @@ def get_drug_data(
                 collection_name=user_drug_collection,
                 search_input=subject,
                 search_fields=["id", "name", "smiles"],
-                exactMatch=True,
+                exact_match=True,
                 limit=1,
             )
             if len(results) > 0:
@@ -158,7 +160,7 @@ def get_disease_data(
             collection_name=main_disease_collection,
             search_input=subject,
             search_fields=["id", "name"],
-            exactMatch=True,
+            exact_match=True,
             limit=1,
         )
 
@@ -172,7 +174,7 @@ def get_disease_data(
                 collection_name=user_disease_collection,
                 search_input=subject,
                 search_fields=["id", "name"],
-                exactMatch=True,
+                exact_match=True,
                 limit=1,
             )
             if len(results) > 0:
@@ -191,9 +193,11 @@ def get_disease_data(
         if disease_name is not None:
             try:
                 log.info(f"generating embedding for: {disease_name}")
-                disease_embedding = get_ollama_embedding(
-                    disease_name, disease_embedding_model
+                embeddings_df = compute_disease_embeddings(
+                    disease_embedding_model, [disease_name]
                 )
+                disease_embedding = embeddings_df["embedding"].values[0]
+
                 log.info("Got embedding.")
                 if disease_embedding is not None:
                     disease_id = (
