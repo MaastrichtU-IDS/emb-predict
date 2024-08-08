@@ -1,0 +1,12 @@
+# Default: https://github.com/qdrant/qdrant/blob/master/config/config.yaml
+log_level: INFO
+telemetry_disabled: true
+
+service:
+  api_key:
+
+storage:
+  # Where to store all the data
+  storage_path: /data/qdrant/storage
+  # Where to store snapshots
+  snapshots_path: /data/qdrant/snapshots
