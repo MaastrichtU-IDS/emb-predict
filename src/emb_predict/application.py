@@ -148,7 +148,6 @@ def set_project_paths(
         if "dataset_drug_disease_processed_fp" not in config
         else config["dataset_drug_disease_processed_fp"]
     )
-
     drug_embedding_fp = (
         get_embeddings_filename(
             processed_dir, dataset, "drug", drug_embedding_model, drug_embedding_dim
