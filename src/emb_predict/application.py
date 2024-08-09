@@ -77,6 +77,26 @@ def set_project_paths(
         if "dataset_version" not in config
         else config["dataset_version"]
     )
+    drug_embedding_model = (
+        drug_embedding_model
+        if "drug_embedding_model" not in config
+        else config["drug_embedding_model"]
+    )
+    drug_embedding_dim = (
+        drug_embedding_dim
+        if "drug_embedding_dim" not in config
+        else config["drug_embedding_dim"]
+    )
+    disease_embedding_model = (
+        disease_embedding_model
+        if "disease_embedding_model" not in config
+        else config["disease_embedding_model"]
+    )
+    disease_embedding_dim = (
+        disease_embedding_dim
+        if "disease_embedding_dim" not in config
+        else config["disease_embedding_dim"]
+    )
 
     download_dir = (
         f"{base_dir}/{download_dir}/{dataset}/{dataset_version}"
@@ -129,26 +149,6 @@ def set_project_paths(
         else config["dataset_drug_disease_processed_fp"]
     )
 
-    drug_embedding_model = (
-        drug_embedding_model
-        if "drug_embedding_model" not in config
-        else config["drug_embedding_model"]
-    )
-    drug_embedding_dim = (
-        drug_embedding_dim
-        if "drug_embedding_dim" not in config
-        else config["drug_embedding_dim"]
-    )
-    disease_embedding_model = (
-        disease_embedding_model
-        if "disease_embedding_model" not in config
-        else config["disease_embedding_model"]
-    )
-    disease_embedding_dim = (
-        disease_embedding_dim
-        if "disease_embedding_dim" not in config
-        else config["disease_embedding_dim"]
-    )
     drug_embedding_fp = (
         get_embeddings_filename(
             processed_dir, dataset, "drug", drug_embedding_model, drug_embedding_dim
