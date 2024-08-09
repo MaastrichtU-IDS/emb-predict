@@ -7,6 +7,6 @@ service:
 
 storage:
   # Where to store all the data
-  storage_path: /data/qdrant/storage
+  storage_path: ../data/qdrant/storage
   # Where to store snapshots
-  snapshots_path: /data/qdrant/snapshots
+  snapshots_path: ../data/qdrant/snapshots
