@@ -411,7 +411,8 @@ def get_predictions(request: PredictInput) -> PredictOutput:
     df_ab.sort_values(by="score", ascending=False, inplace=True)
 
     df_ab = df_ab.reset_index(drop=True)
-    df_ab.loc[options.n_results :, "score"] = 0.0
+    if options.n_results is not None:
+        df_ab.loc[options.n_results :, "score"] = 0.0
 
     df_ab.rename(
         columns={
