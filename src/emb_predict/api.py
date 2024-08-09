@@ -15,7 +15,15 @@ from emb_predict.predict import get_predictions
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     config_file = os.getenv("CONFIG_FILE")
-    log.info(f"Loading application components from {config_file}")
+    if config_file is None:
+        # try the default one
+        config_file = "config.yml"
+        if os.path.exists(config_file):
+            config_file = "config.yml"
+            log.info(f"Loading application components using {config_file}")
+        else:
+            config_file = None
+
     paths = set_project_paths(config_file=config_file)
     pre_loaded_data = load_application_components(paths)
     pre_loaded_data[
