@@ -39,10 +39,9 @@ dependencies = [
     "pubchempy",
     "rdkit",
     "typer",
-    # "onnxruntime-gpu",
-    #"onnxruntime-gpu --extra-index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/",
-    # "fastembed-gpu",
-    # "cupy-cuda12x",
+    "onnxruntime-gpu",
+    "fastembed-gpu",
+    "cupy-cuda12x",
     "xgboost",
     "ipykernel",
     "linkml-runtime ==1.6.0",
@@ -127,6 +126,8 @@ path = "src/emb_predict/__init__.py"
 [tool.hatch.metadata]
 allow-direct-references = true
 
+[tool.hatch.envs.default.env-vars]
+PIP_EXTRA_INDEX_URL = "https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/"
 
 [tool.pytest.ini_options]
 addopts = [
