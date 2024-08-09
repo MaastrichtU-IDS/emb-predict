@@ -32,7 +32,7 @@ training_models_dir = None
 
 def set_training_models_dir(models_dir: str):
     globals()["training_models_dir"] = models_dir
-    os.makedirs(dir, exist_ok=True)
+    os.makedirs(models_dir, exist_ok=True)
 
 
 def get_training_models_dir():
