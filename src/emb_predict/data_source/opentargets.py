@@ -167,6 +167,8 @@ def prepare_ot_data(args):
         drug_embedding_dim=args.drug_embedding_dim,
         disease_embedding_model=args.disease_embedding_model,
         disease_embedding_dim=args.disease_embedding_dim,
+        make_dirs=True,
+        config_file=args.config,
     )
 
     #### make all the filenames
