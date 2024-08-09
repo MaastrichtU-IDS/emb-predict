@@ -5,6 +5,7 @@ import os
 import re
 from emb_predict.embeddings.mt_embed import get_smiles_embeddings
 from emb_predict.embeddings.llm_embed import compute_disease_embeddings
+from emb_predict.embeddings.embeddings import get_embeddings_filename
 from emb_predict.utils import (
     log,
     parse_string_to_dict,
@@ -238,9 +239,8 @@ def prepare_ot_data(args):
 
         a = embeddings_df["embedding"][0]
         disease_embedding_dimension = len(a)
-        from emb_predict.embeddings.embeddings import getEmbeddingsFilename
 
-        paths["disease_embedding_fp"] = getEmbeddingsFilename(
+        paths["disease_embedding_fp"] = get_embeddings_filename(
             paths["processed_dir"],
             dataset,
             "disease",
